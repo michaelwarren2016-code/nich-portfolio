@@ -1,6 +1,8 @@
 /* Good by Nature video background; scoped to this section only. */
 .ethics-section.good-by-nature-section{position:relative;height:100svh;min-height:100svh;isolation:isolate;overflow:hidden;background:#1B3022;color:#F5F2ED}
 .ethics-section.good-by-nature-section video.good-by-nature-video{display:block!important;position:absolute!important;z-index:0!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;object-fit:cover!important;object-position:center!important;pointer-events:none!important}
+.ethics-section.good-by-nature-section video.good-by-nature-video{opacity:0;transition:opacity .65s ease}
+.ethics-section.good-by-nature-section.is-video-playing video.good-by-nature-video{opacity:1}
 .good-by-nature-play{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);border:1px solid rgba(245,242,237,.72);border-radius:999px;padding:13px 20px;background:rgba(27,48,34,.86);color:#F5F2ED;font:600 15px/1.2 "Manrope",Arial,sans-serif;cursor:pointer;backdrop-filter:blur(8px)}
 .good-by-nature-play[hidden]{display:none}
 .ethics-section.good-by-nature-section::before{content:"";position:absolute;z-index:1;inset:0;background:linear-gradient(90deg,rgba(8,20,12,.18),rgba(8,20,12,.04) 70%),linear-gradient(0deg,rgba(8,20,12,.08),transparent 55%);pointer-events:none}
@@ -13,6 +15,7 @@
 .ethics-section.good-by-nature-section .section-number{z-index:1}
 @media(max-width:760px){.ethics-section.good-by-nature-section .section-placeholder h2{font-size:clamp(57px,13.5vw,97.5px)}}
 @media(max-width:760px){.ethics-section.good-by-nature-section::before{background:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1)),linear-gradient(90deg,rgba(8,20,12,.18),rgba(8,20,12,.04) 70%),linear-gradient(0deg,rgba(8,20,12,.08),transparent 55%)}}
+@media(prefers-reduced-motion:reduce){.ethics-section.good-by-nature-section video.good-by-nature-video{transition:none}}
 
 
 

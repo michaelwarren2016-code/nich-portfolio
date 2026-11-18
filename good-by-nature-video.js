@@ -1,6 +1,7 @@
-/* Load the ethics background only near view; keep a manual mobile fallback. */
+/* Preload the ethics background when Products enters view; keep playback lazy and manual fallback. */
 (() => {
   const section = document.querySelector('.good-by-nature-section');
+  const preloadTrigger = document.querySelector('#products');
   const video = section?.querySelector('.good-by-nature-video');
   const sources = video ? [...video.querySelectorAll('source[data-src]')] : [];
   const playButton = section?.querySelector('.good-by-nature-play');
@@ -20,6 +21,7 @@
   const loadVideo = () => {
     if (loaded) return;
     loaded = true;
+    video.preload = 'auto';
     sources.forEach((source) => { source.src = source.dataset.src; });
     video.load();
     video.addEventListener('canplay', start, { once: true });
@@ -30,8 +32,14 @@
     visible = true;
     start();
   });
-  video.addEventListener('playing', () => { playButton.hidden = true; });
-  video.addEventListener('error', showPlayButton);
+  video.addEventListener('playing', () => {
+    section.classList.add('is-video-playing');
+    playButton.hidden = true;
+  });
+  video.addEventListener('error', () => {
+    section.classList.remove('is-video-playing');
+    showPlayButton();
+  });
   video.addEventListener('ended', () => {
     video.pause();
     const resumeFromStart = () => {
@@ -46,8 +54,9 @@
     if (!entry.isIntersecting) return;
     observer.disconnect();
     loadVideo();
-  }, { rootMargin: '300px 0px', threshold: 0.01 });
-  preloadObserver.observe(section);
+  }, { threshold: 0.01 });
+  if (preloadTrigger) preloadObserver.observe(preloadTrigger);
+  else preloadObserver.observe(section);
 
   const visibilityObserver = new IntersectionObserver(([entry]) => {
     visible = entry.isIntersecting;
