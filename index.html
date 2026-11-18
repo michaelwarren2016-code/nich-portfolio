@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1B3022">
+  <meta name="description" content="New Islington Coffee House — good coffee, good company, no particular hurry.">
+  <title>New Islington Coffee House</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="good-by-nature.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="header-mark" href="#home" aria-label="New Islington Coffee House home"><img src="assets/logo-white.svg" alt=""></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#products"><span class="nav-marker" aria-hidden="true">✳</span><span>Products</span></a>
+      <a href="#ethics"><span class="nav-marker" aria-hidden="true">✦</span><span>Ethics</span></a>
+      <a href="#contact"><span class="nav-marker" aria-hidden="true">✺</span><span>Contact</span></a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero section" id="home" aria-labelledby="hero-title">
+      <div class="hero-stage hero-editorial-stage">
+        <div class="hero-copy">
+          <h1 id="hero-title">Good coffee,<br>by nature.</h1>
+          <p class="hero-subtitle">Welcome to New Islington Coffee House - your newest neighbourhood best friend</p>
+        </div>
+        <div class="hero-bag-viewer" id="hero-bag-viewer" aria-label="Three-dimensional view of the New Islington Coffee House takeaway cup">
+          <canvas id="hero-bag-canvas"></canvas>
+        </div>
+      </div>
+      <div class="hero-bottom">
+        
+        <a class="scroll-cue" href="#products" aria-label="Scroll to products"><span>Scroll to take a look around</span><svg viewBox="0 0 24 36" aria-hidden="true"><path d="M12 2v28m-8-8 8 9 8-9"/></svg></a>
+      </div>
+    </section>
+    <section class="section colour-section products-section" id="products" aria-labelledby="products-title">
+      <div class="product-feature" id="product-feature">
+        <div class="product-copy">
+          <p class="product-eyebrow" aria-hidden="true">01 / AURORA BLEND</p>
+          <p class="product-headline" aria-hidden="true">A brighter morning ritual</p>
+          <h2 id="products-title">Aurora Blend</h2>
+          <p class="product-description">The newest coffee in the NICH collection.</p>
+          <div class="product-notes" aria-hidden="true"></div>
+          <p class="product-weight">Whole bean, 250 g</p>
+          
+        </div>
+        <div class="product-visual-column">
+          <div class="product-viewer" id="usual-viewer" aria-label="Interactive 3D view of the featured coffee bag. Drag to rotate.">
+          <div class="viewer-loading" id="viewer-loading">MAKING A FRESH CUP…</div>
+          <canvas id="usual-canvas"></canvas>
+          <span class="viewer-index" aria-hidden="true">NI / 01</span>
+          <button class="product-next" id="product-next" type="button" aria-label="Next coffee: The Usual"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></button>
+          </div>
+          <p class="product-interaction"><span class="interaction-mark" aria-hidden="true">↔</span><span>Drag to take a closer look</span></p>
+        </div>
+      </div>
+      <span class="section-number">02</span>
+    </section>
+    <section class="section colour-section ethics-section good-by-nature-section" id="ethics" aria-labelledby="ethics-title" data-video-mode="loop">
+      <video class="good-by-nature-video" aria-hidden="true" tabindex="-1" muted playsinline preload="auto">
+        <source src="assets/video/good-by-nature-loop.mp4" type="video/mp4">
+      </video>
+      <div class="good-by-nature-content">
+        <div class="section-placeholder">
+          <h2 id="ethics-title">Good by<br><em>nature.</em></h2>
+          <p class="section-note">Thoughtful sourcing, less waste and good relationships.</p>
+        </div>
+      </div>
+      <span class="section-number">03</span>
+    </section>
+    <section class="section colour-section contact-section" id="contact" aria-labelledby="contact-title">
+      <div class="section-placeholder"><h2 id="contact-title">See you<br><em>soon.</em></h2><p class="section-note">Your new favourite corner of the neighbourhood.</p></div><span class="contact-sticker">ONE<br>MORE?</span><span class="section-number">04</span>
+    </section>
+  </main>
+  <script src="script.js"></script>
+  <script src="good-by-nature-video.js"></script>
+  <script type="module" src="product-viewer.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <filter id="warp" x="-15%" y="-15%" width="130%" height="130%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.0045 0.009" numOctaves="3" seed="17" result="warpNoise"/>
+      <feDisplacementMap in="SourceGraphic" in2="warpNoise" scale="190" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1710"/>
+      <stop offset=".48" stop-color="#1b3022"/>
+      <stop offset="1" stop-color="#102319"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="20%" cy="82%" r="75%">
+      <stop offset="0" stop-color="#4e9b50" stop-opacity=".96"/>
+      <stop offset=".27" stop-color="#286b39" stop-opacity=".78"/>
+      <stop offset=".58" stop-color="#173e27" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#102319" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="78%" cy="56%" r="66%">
+      <stop offset="0" stop-color="#47864b" stop-opacity=".86"/>
+      <stop offset=".34" stop-color="#285c35" stop-opacity=".58"/>
+      <stop offset="1" stop-color="#102319" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#06110a" stop-opacity="0"/>
+      <stop offset=".24" stop-color="#06110a" stop-opacity=".88"/>
+      <stop offset=".39" stop-color="#3d8148" stop-opacity=".34"/>
+      <stop offset=".52" stop-color="#07140b" stop-opacity=".82"/>
+      <stop offset=".69" stop-color="#5ca05b" stop-opacity=".52"/>
+      <stop offset=".84" stop-color="#06110a" stop-opacity=".76"/>
+      <stop offset="1" stop-color="#06110a" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="ribbon2" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#07130b" stop-opacity="0"/>
+      <stop offset=".32" stop-color="#6aa968" stop-opacity=".4"/>
+      <stop offset=".48" stop-color="#07130b" stop-opacity=".86"/>
+      <stop offset=".64" stop-color="#3f8248" stop-opacity=".4"/>
+      <stop offset="1" stop-color="#07130b" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#base)"/>
+  <g filter="url(#warp)">
+    <rect x="-100" y="-80" width="1800" height="1160" fill="url(#glowA)"/>
+    <rect x="-100" y="-80" width="1800" height="1160" fill="url(#glowB)"/>
+    <path d="M-140 720 C120 480 270 940 520 690 S890 360 1110 570 S1430 850 1760 490 L1760 1080 L-140 1080Z" fill="url(#ribbon)"/>
+    <path d="M-120 340 C140 80 360 470 610 310 S990 100 1190 320 S1480 530 1740 210" fill="none" stroke="url(#ribbon2)" stroke-width="310"/>
+    <path d="M-100 850 C160 640 320 900 560 760 S940 500 1170 690 S1480 920 1740 660" fill="none" stroke="#5a9a58" stroke-opacity=".20" stroke-width="170"/>
+    <path d="M-100 120 C210 310 380 10 660 170 S1020 390 1280 150 S1530 60 1740 190" fill="none" stroke="#030b06" stroke-opacity=".62" stroke-width="220"/>
+  </g>
+  <rect width="1600" height="1000" fill="#07130b" opacity=".10"/>
+</svg>

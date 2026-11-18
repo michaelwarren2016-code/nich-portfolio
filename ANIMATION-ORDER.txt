@@ -1,0 +1,20 @@
+D11 HERO WORDMARK ANIMATION
+
+The hero wordmark uses 23 sequential SVG glyph assets in this reading order:
+N e w / I s l i n g t o n / C o f f e e / H o u s e
+
+The sequence is explicitly numbered in assets/logo-letters/ordered/ from 01 to 23.
+
+Animation timing in script.js:
+- Initial delay: 180 ms
+- Interval between glyph starts: 95 ms
+- Fade duration per glyph: 145 ms
+- Last glyph begins at 2,270 ms; the reveal completes at approximately 2,415 ms.
+
+The two f glyphs are separate ordered assets in D11. The sequence is validated in
+JavaScript before playback, and the script waits for all 23 SVGs to decode before
+starting. If an asset fails to load or the sequence is incomplete, the full logo is
+shown rather than partially revealing or jumping ahead.
+
+The supplied typewriter-preview.gif is a visual sequence preview built from these
+same 23 assets and timing values. The website itself runs the animation in-browser.

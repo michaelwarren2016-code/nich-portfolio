@@ -1,0 +1,16 @@
+/* Good by Nature video background; scoped to this section only. */
+.ethics-section.good-by-nature-section{position:relative;height:100svh;min-height:100svh;isolation:isolate;overflow:hidden;background:#1B3022;color:#F5F2ED}
+.ethics-section.good-by-nature-section video.good-by-nature-video{display:block!important;position:absolute!important;z-index:0!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;object-fit:cover!important;object-position:center!important;pointer-events:none!important}
+.ethics-section.good-by-nature-section::before{content:"";position:absolute;z-index:1;inset:0;background:linear-gradient(90deg,rgba(8,20,12,.18),rgba(8,20,12,.04) 70%),linear-gradient(0deg,rgba(8,20,12,.08),transparent 55%);pointer-events:none}
+.good-by-nature-content{position:relative;z-index:2;display:flex;flex:1;align-items:center}
+.ethics-section.good-by-nature-section .section-placeholder{margin:0;max-width:min(760px,80vw)}
+.ethics-section.good-by-nature-section .section-placeholder h2{font-family:"Marcellus",Georgia,serif;font-size:clamp(57px,9.75vw,135px);font-weight:400;letter-spacing:-.035em;line-height:.9}
+.ethics-section.good-by-nature-section .section-placeholder h2 em{font-style:normal}
+.ethics-section.good-by-nature-section .section-note{font-family:"Manrope",Arial,sans-serif;font-size:clamp(16px,1.6vw,21px);line-height:1.65;max-width:440px}
+.ethics-section.good-by-nature-section .section-number{z-index:1}
+@media(max-width:760px){.ethics-section.good-by-nature-section .section-placeholder h2{font-size:clamp(57px,13.5vw,97.5px)}}
+
+
+
+
+
