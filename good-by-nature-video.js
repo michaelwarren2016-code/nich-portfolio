@@ -1,12 +1,37 @@
-/* Good by Nature background: muted autoplay, restart only after the seek reaches frame zero. */
+/* Load the ethics background only near view; keep a manual mobile fallback. */
 (() => {
-  const video = document.querySelector('.good-by-nature-section .good-by-nature-video');
-  if (!video) return;
+  const section = document.querySelector('.good-by-nature-section');
+  const video = section?.querySelector('.good-by-nature-video');
+  const source = video?.querySelector('source[data-src]');
+  const playButton = section?.querySelector('.good-by-nature-play');
+  if (!section || !video || !source || !playButton) return;
+
   video.loop = false;
   video.muted = true;
   video.playsInline = true;
+  let loaded = false;
+  let visible = false;
 
-  const start = () => video.play().catch(() => {});
+  const showPlayButton = () => { playButton.hidden = false; };
+  const start = () => {
+    if (!visible || !loaded) return;
+    video.play().then(() => { playButton.hidden = true; }).catch(showPlayButton);
+  };
+  const loadVideo = () => {
+    if (loaded) return;
+    loaded = true;
+    source.src = source.dataset.src;
+    video.load();
+    video.addEventListener('canplay', start, { once: true });
+  };
+
+  playButton.addEventListener('click', () => {
+    if (!loaded) loadVideo();
+    visible = true;
+    start();
+  });
+  video.addEventListener('playing', () => { playButton.hidden = true; });
+  video.addEventListener('error', showPlayButton);
   video.addEventListener('ended', () => {
     video.pause();
     const resumeFromStart = () => {
@@ -16,12 +41,22 @@
     video.addEventListener('seeked', resumeFromStart, { once: true });
     video.currentTime = 0;
   });
-  video.addEventListener('error', () => {
-    if (video.networkState !== HTMLMediaElement.NETWORK_NO_SOURCE) {
-      video.load();
+
+  const preloadObserver = new IntersectionObserver(([entry], observer) => {
+    if (!entry.isIntersecting) return;
+    observer.disconnect();
+    loadVideo();
+  }, { rootMargin: '300px 0px', threshold: 0.01 });
+  preloadObserver.observe(section);
+
+  const visibilityObserver = new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    if (visible) {
+      loadVideo();
       start();
+    } else {
+      video.pause();
     }
-  });
-  if (video.readyState >= 2) start();
-  else video.addEventListener('canplay', start, { once: true });
+  }, { threshold: 0.01 });
+  visibilityObserver.observe(section);
 })();

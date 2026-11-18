@@ -38,7 +38,7 @@ if (container && canvas) {
     antialias: true,
     powerPreference: 'high-performance'
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 0.94;
@@ -214,7 +214,14 @@ if (container && canvas) {
     );
   }
 
-  loadProductBag('./models/aurora-blend-product.glb', Math.PI, 0, false);
+  const initialProductObserver = new IntersectionObserver(([entry], observer) => {
+    if (!entry.isIntersecting) return;
+    observer.disconnect();
+    if (!window.nichProductSelectionStarted) {
+      loadProductBag('./models/aurora-blend-product.glb', Math.PI, 0, false);
+    }
+  }, { rootMargin: '600px 0px', threshold: 0.01 });
+  initialProductObserver.observe(container);
   window.nichLoadProductBag = loadProductBag;
 
   function resize() {
@@ -252,8 +259,12 @@ if (container && canvas) {
   container.addEventListener('pointercancel', releasePointer);
   container.addEventListener('lostpointercapture', releasePointer);
 
+  let productFrame = 0;
+  let productVisible = false;
   function animate() {
-    requestAnimationFrame(animate);
+    productFrame = 0;
+    if (!productVisible || document.hidden) return;
+    productFrame = requestAnimationFrame(animate);
     const elapsed = clock.getElapsedTime();
     if (modelReady) {
       currentRotation = THREE.MathUtils.lerp(currentRotation, targetRotation, pointerDown ? 0.12 : 0.045);
@@ -263,7 +274,22 @@ if (container && canvas) {
     if (smaaComposer) smaaComposer.render();
     else renderer.render(scene, camera);
   }
-  animate();
+  const productVisibilityObserver = new IntersectionObserver(([entry]) => {
+    productVisible = entry.isIntersecting;
+    if (productVisible && !productFrame && !document.hidden) animate();
+    else if (!productVisible && productFrame) {
+      cancelAnimationFrame(productFrame);
+      productFrame = 0;
+    }
+  }, { threshold: 0.01 });
+  productVisibilityObserver.observe(container);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && productVisible && !productFrame) animate();
+    else if (document.hidden && productFrame) {
+      cancelAnimationFrame(productFrame);
+      productFrame = 0;
+    }
+  });
 }
 
 // Editorial home hero: a second instance of the same bag, driven by page scroll.
@@ -374,9 +400,12 @@ if (container && canvas) {
     (error) => console.warn('Aurora texture could not be loaded; retaining static CSS background.', error)
   );
 
+  let auroraInView = false;
   function renderAurora(now) {
+    auroraFrame = 0;
+    if (!auroraInView || document.hidden) return;
     auroraFrame = requestAnimationFrame(renderAurora);
-    if (!auroraReady || document.hidden) return;
+    if (!auroraReady) return;
     const elapsed = auroraReducedMotion ? 0 : ((now - auroraStart) / 1000) % auroraDuration;
     auroraMaterial.uniforms.uPhase.value = (elapsed / auroraDuration) * Math.PI * 2;
     auroraRenderer.render(auroraScene, auroraCamera);
@@ -385,14 +414,28 @@ if (container && canvas) {
   const auroraResizeObserver = new ResizeObserver(resizeAurora);
   auroraResizeObserver.observe(heroSection);
   window.addEventListener('resize', resizeAurora, { passive: true });
+  const auroraVisibilityObserver = new IntersectionObserver(([entry]) => {
+    auroraInView = entry.isIntersecting;
+    if (auroraInView && !document.hidden && !auroraFrame) {
+      auroraFrame = requestAnimationFrame(renderAurora);
+    } else if (!auroraInView && auroraFrame) {
+      cancelAnimationFrame(auroraFrame);
+      auroraFrame = 0;
+    }
+  }, { threshold: 0.01 });
+  auroraVisibilityObserver.observe(heroSection);
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) {
       auroraStart = performance.now() - (auroraMaterial.uniforms.uPhase.value / (Math.PI * 2)) * auroraDuration * 1000;
       resizeAurora();
+      if (auroraInView && !auroraFrame) auroraFrame = requestAnimationFrame(renderAurora);
+    } else if (auroraFrame) {
+      cancelAnimationFrame(auroraFrame);
+      auroraFrame = 0;
     }
   });
   resizeAurora();
-  auroraFrame = requestAnimationFrame(renderAurora);
+  if (!document.hidden) auroraFrame = requestAnimationFrame(renderAurora);
 })();
 
 const heroContainer = document.querySelector('#hero-bag-viewer');
@@ -404,7 +447,7 @@ if (heroContainer && heroCanvas) {
   // Render the large hero product at a higher internal resolution to reduce
   // visible silhouette stepping on high-density displays. Re-read DPR on
   // every resize because browser zoom can change devicePixelRatio at runtime.
-  const getHeroPixelRatio = () => Math.min(window.devicePixelRatio || 1, 3);
+  const getHeroPixelRatio = () => Math.min(window.devicePixelRatio || 1, 1.5);
   let heroPixelRatio = getHeroPixelRatio();
   heroRenderer.setPixelRatio(heroPixelRatio);
   heroRenderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -679,8 +722,12 @@ if (heroContainer && heroCanvas) {
   let heroAutoPhase = 0;
   let cupAutoPhase = 0;
   let heroScrollBoost = 0;
+  let heroFrame = 0;
+  let heroVisible = false;
   function renderHero(now = performance.now()) {
-    requestAnimationFrame(renderHero);
+    heroFrame = 0;
+    if (!heroVisible || document.hidden) return;
+    heroFrame = requestAnimationFrame(renderHero);
     if (heroLoaded) {
       const deltaSeconds = Math.min((now - lastHeroFrameAt) / 1000, 0.05);
       const scrollActive = now - lastHeroScrollAt < 180;
@@ -703,9 +750,25 @@ if (heroContainer && heroCanvas) {
       }
       heroPivot.rotation.z = heroStartingTilt;
     }
-    heroComposer.render();
+    if (window.matchMedia('(max-width: 760px)').matches) heroRenderer.render(heroScene, heroCamera);
+    else heroComposer.render();
   }
-  renderHero();
+  const heroVisibilityObserver = new IntersectionObserver(([entry]) => {
+    heroVisible = entry.isIntersecting;
+    if (heroVisible && !heroFrame && !document.hidden) renderHero();
+    else if (!heroVisible && heroFrame) {
+      cancelAnimationFrame(heroFrame);
+      heroFrame = 0;
+    }
+  }, { threshold: 0.01 });
+  heroVisibilityObserver.observe(heroContainer);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && heroVisible && !heroFrame) renderHero();
+    else if (document.hidden && heroFrame) {
+      cancelAnimationFrame(heroFrame);
+      heroFrame = 0;
+    }
+  });
 }
 
 
@@ -763,6 +826,7 @@ if (productFeature && productNext && productTitle && productDescription && produ
   productNext.setAttribute('aria-label', `Next coffee: ${productStates[1].label}`);
   productNext.addEventListener('click', () => {
     if (productTransitioning) return;
+    window.nichProductSelectionStarted = true;
     productTransitioning = true;
     productNext.disabled = true;
     activeProduct = (activeProduct + 1) % productStates.length;
