@@ -9,6 +9,7 @@
 .ethics-section.good-by-nature-section .section-placeholder h2{font-family:"Marcellus",Georgia,serif;font-size:clamp(57px,9.75vw,135px);font-weight:400;letter-spacing:-.035em;line-height:.9}
 .ethics-section.good-by-nature-section .section-placeholder h2 em{font-style:normal}
 .ethics-section.good-by-nature-section .section-note{font-family:"Manrope",Arial,sans-serif;font-size:clamp(16px,1.6vw,21px);line-height:1.65;max-width:440px}
+.ethics-section.good-by-nature-section .section-placeholder h2,.ethics-section.good-by-nature-section .section-note{text-shadow:0 2px 14px rgba(0,0,0,.42)}
 .ethics-section.good-by-nature-section .section-number{z-index:1}
 @media(max-width:760px){.ethics-section.good-by-nature-section .section-placeholder h2{font-size:clamp(57px,13.5vw,97.5px)}}
 

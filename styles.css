@@ -568,8 +568,19 @@
 .hero-copy{position:relative;z-index:4}
 
 
-/* D72.3 — make the hero grain about 1.5x coarser while preserving its contrast and animation. */
-.hero::before{background-size:270px 270px !important}
+/* Keep the hero grain fine and restrained across desktop and mobile. */
+.hero::before{
+  opacity:.28 !important;
+  filter:none !important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cfilter id='filmFine'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' seed='27' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23filmFine)'/%3E%3C/svg%3E") !important;
+  background-size:180px 180px !important;
+  background-repeat:repeat !important;
+}
+@media(max-width:760px){.hero::before{opacity:.2 !important;background-size:144px 144px !important}}
+@media(max-width:420px){.hero::before{opacity:.18 !important;background-size:128px 128px !important}}
+
+/* Keep both hero models clear of the mobile headline and supporting copy. */
+@media(max-width:760px){.hero-bag-viewer{transform:translate(-20% ,20%) !important}}
 
 /* D72.26 hero typography: supplied Marcellus headline, Manrope supporting copy. */
 .hero-copy h1{

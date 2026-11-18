@@ -2,9 +2,9 @@
 (() => {
   const section = document.querySelector('.good-by-nature-section');
   const video = section?.querySelector('.good-by-nature-video');
-  const source = video?.querySelector('source[data-src]');
+  const sources = video ? [...video.querySelectorAll('source[data-src]')] : [];
   const playButton = section?.querySelector('.good-by-nature-play');
-  if (!section || !video || !source || !playButton) return;
+  if (!section || !video || !sources.length || !playButton) return;
 
   video.loop = false;
   video.muted = true;
@@ -20,7 +20,7 @@
   const loadVideo = () => {
     if (loaded) return;
     loaded = true;
-    source.src = source.dataset.src;
+    sources.forEach((source) => { source.src = source.dataset.src; });
     video.load();
     video.addEventListener('canplay', start, { once: true });
   };
