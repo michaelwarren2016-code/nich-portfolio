@@ -781,8 +781,9 @@
   .hero::after{height:32vh;background:linear-gradient(to bottom,rgba(0,0,0,0),rgba(0,0,0,.28))}
 }
 
-/* Keep the f pair in the hero headline separate while retaining Marcellus elsewhere. */
-.hero-copy .hero-no-ff-ligature{font-variant-ligatures:none !important;font-feature-settings:"liga" 0,"clig" 0 !important}
+/* Render the hero's two f glyphs independently so the font cannot form an ff ligature. */
+.hero-copy .hero-ff-pair{display:inline-flex;align-items:baseline;gap:.035em;vertical-align:baseline}
+.hero-copy .hero-ff-pair>span{display:inline-block;font-variant-ligatures:none !important;font-feature-settings:"liga" 0,"clig" 0,"calt" 0 !important}
 
 /* Contact footer: the same Marcellus scale as Good by Nature, over a slow moving glow. */
 .contact-section{isolation:isolate;overflow:hidden}
@@ -811,28 +812,28 @@
   from{transform:translate3d(-1.5%,-1%,0) scale(1.02)}
   to{transform:translate3d(1.5%,1%,0) scale(1.08)}
 }
-.instagram-placeholder{
-  position:absolute;
-  z-index:2;
-  left:clamp(22px,6vw,90px);
-  bottom:22px;
+.contact-actions{display:flex;flex-direction:column;align-items:flex-start;gap:9px;margin-top:22px}
+.contact-button{
+  position:static;
+  z-index:auto;
   display:inline-flex;
   align-items:center;
-  gap:9px;
+  gap:8px;
+  width:fit-content;
   border:1px solid rgba(245,242,237,.45);
   border-radius:999px;
-  padding:10px 15px;
+  padding:8px 11px;
   background:rgba(245,242,237,.08);
   color:var(--cream);
-  font:600 12px/1 "Manrope",Arial,sans-serif;
+  text-decoration:none;
+  font:600 11px/1 "Manrope",Arial,sans-serif;
   letter-spacing:.04em;
   opacity:.88;
   cursor:default;
 }
-.instagram-placeholder svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.contact-button svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .instagram-placeholder .instagram-flash{fill:currentColor;stroke:none}
 @media(max-width:760px){
   .contact-section .contact-content h2{font-size:clamp(57px,13.5vw,97.5px)}
-  .instagram-placeholder{left:22px;bottom:20px}
 }
 @media(prefers-reduced-motion:reduce){.contact-section::after{animation:none}}
