@@ -758,3 +758,25 @@
   .product-description{margin:0 0 14px}
   .product-weight{margin-top:0}
 }
+
+/* Slightly lower the navigation markers, with explicit text presentation for the mobile Products star. */
+.nav-marker{top:9px}
+@media(max-width:760px){
+  .nav-marker{top:8px}
+  .nav-marker-products{font-family:"Manrope",Arial,sans-serif;font-variant-emoji:text}
+}
+
+/* A restrained lower-edge fade keeps the hero scroll cue legible. */
+.hero::after{
+  content:"" !important;
+  display:block !important;
+  position:absolute;
+  inset:auto 0 0;
+  z-index:2;
+  height:clamp(120px,24vh,250px);
+  pointer-events:none;
+  background:linear-gradient(to bottom,rgba(0,0,0,0),rgba(0,0,0,.2));
+}
+@media(max-width:760px){
+  .hero::after{height:32vh;background:linear-gradient(to bottom,rgba(0,0,0,0),rgba(0,0,0,.28))}
+}

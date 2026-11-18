@@ -12,6 +12,7 @@
 .ethics-section.good-by-nature-section .section-placeholder h2,.ethics-section.good-by-nature-section .section-note{text-shadow:0 2px 14px rgba(0,0,0,.42)}
 .ethics-section.good-by-nature-section .section-number{z-index:1}
 @media(max-width:760px){.ethics-section.good-by-nature-section .section-placeholder h2{font-size:clamp(57px,13.5vw,97.5px)}}
+@media(max-width:760px){.ethics-section.good-by-nature-section::before{background:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1)),linear-gradient(90deg,rgba(8,20,12,.18),rgba(8,20,12,.04) 70%),linear-gradient(0deg,rgba(8,20,12,.08),transparent 55%)}}
 
 
 
