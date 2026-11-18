@@ -831,7 +831,8 @@
   opacity:.88;
   cursor:default;
 }
-.contact-button svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.contact-actions .contact-button{align-self:flex-start;max-width:max-content;white-space:nowrap}
+.contact-actions .contact-button svg{display:block;width:16px !important;height:16px !important;max-width:16px;max-height:16px;flex:0 0 16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .instagram-placeholder .instagram-flash{fill:currentColor;stroke:none}
 @media(max-width:760px){
   .contact-section .contact-content h2{font-size:clamp(57px,13.5vw,97.5px)}
