@@ -357,9 +357,9 @@ if (container && canvas) {
                  + 0.00845 * sin(6.2831853 * (baseUv.x * 0.34 + baseUv.y * 0.76) - 2.0 * p);
         vec2 uv = clamp(baseUv + vec2(dx, dy), vec2(0.001), vec2(0.999));
         vec3 colour = texture2D(uGradient, uv).rgb * uDarken;
-        // Lift the deepest pixels by a subtle 2.5% so they read as charcoal,
+        // Lift the deepest pixels by a subtle 3.5% so they read as charcoal,
         // leaving the CSS grain layer visible over the aurora.
-        colour = min(colour + vec3(0.025), vec3(1.0));
+        colour = min(colour + vec3(0.035), vec3(1.0));
         float breathing = 1.0 + 0.018 * sin(p) * (0.35 + 0.65 * smoothstep(0.18, 0.82, colour.g));
         colour *= breathing;
         gl_FragColor = vec4(colour, 1.0);
